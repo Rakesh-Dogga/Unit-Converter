@@ -35,13 +35,13 @@ python-unit-converter/
 2. Clone this repository:
 
    ```bash
-   git clone https://github.com/Rakesh-Dogga/python-unit-converter.git
+   git clone https://github.com/Rakesh-Dogga/Unit-Converter.git
    ```
 
 3. Navigate to the project directory:
 
    ```bash
-   cd python-unit-converter
+   cd Unit-Converter
    ```
 
 4. Run the program:
