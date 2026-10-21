@@ -1,4 +1,4 @@
-# Python Unit Converter
+# Unit Converter
 
 A simple, terminal-based unit converter built using Python. This project allows users to convert values between different units of measurement through an interactive command-line interface.
 
