@@ -9,6 +9,7 @@ A simple, terminal-based unit converter built using Python. This project allows 
 - **Speed Conversion:** Convert between meters per second, kilometers per hour, miles per hour, and knots.
 - **Time Conversion:** Convert between seconds, minutes, hours, days, and weeks.
 - **Volume Conversion:** Convert between liters, milliliters, cubic meters, and US gallons.
+- **Digital Storage:** Convert between bytes, kb, mb, gb, tb, pb and eb.
 - **Unit Selection:** Displays the supported units for the selected converter.
 - **Input Validation:** Checks whether the selected converter and units are supported.
 
@@ -63,21 +64,26 @@ Temperature
 Speed
 Time
 Volume
-Enter selected converter: length
+Digital Storage
+Enter selected converter: digital storage
 
-Available length units: 
- km     - Kilometer
- m      - meter
- cm     - Centimeter
- mm     - Millimeter
+Available digital storage units: 
+ bit    - Bit
+ byte   - Byte
+ kb     - Kilobyte
+ mb     - Megabyte
+ gb     - Gigabyte
+ tb     - Terabyte
+ pb     - Petabyte
+ eb     - Exabyte
 
-COnvert from units: km
-Enter value: 100000000
-Convert to units: mm
+Convert from units: tb
+Enter value: 10000
+Convert to units: kb
 
 ==============================
 CONVERSION RESULT
-Result: 1e+14 mm
+Result: 1e+13 kb
 ==============================
 ```
 
