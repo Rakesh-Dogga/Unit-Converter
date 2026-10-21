@@ -1,20 +1,23 @@
 """
-Unit converter is a calculator that is used for measuring values from one unit to another of one specific category.
-1. The program first asks for the spcified converter such as length converter, temperature converter, speed converter, time concverter and volume converter.
-2. Then it asks from_metric, from_value and target_metric so that it understand that the given value to be converted from_metric to target_metric
-3. Then it gives the converted value as the result.
+Unit Converter is a program that converts values from one unit to another within a specific category.
+
+1. The program first asks the user to select a converter, such as Length, Temperature, Speed, Time, Volume, or Digital Storage.
+2. Then, it asks the user to enter the source unit (from_metric), the value to be converted (from_value), and the target unit (target_metric).
+3. Finally, the program converts the given value from the source unit to the target unit and displays the result.
 """
 def length_converter(from_value, from_metric, target_metric):
     """Store conversion factors in dictrionary for km, m, cm with values with respect to meters."""
     conversion_factor = {
-        "km" : 1000,            # 1 kilo meter  = 1000 meters
-        "m" : 1,                # 1 meter  = 1 meters
-        "cm" : 0.01,            # 1 centi-meter = 0.01 meters
-        "mm" : 0.001,           # 1 milli-meter = 0.001 meters
-        "mile" : 1609.34,       # 1 mile = 1609.34 meters
-        "yard": 0.9144,         # 1 yard = 0.9144 meters
-        "foot" : 0.3048,        # 1 foot = 0.3048 meters
-        "inch" : 0.0254         # 1 inch = 0.0254 meters
+        "km" : 1000,                    # 1 kilo meter  = 1000 meters
+        "m" : 1,                        # 1 meter  = 1 meters
+        "cm" : 0.01,                    # 1 centi-meter = 0.01 meters
+        "mm" : 0.001,                   # 1 milli-meter = 0.001 meters
+        "nanometer" : 0.000000001,      # 1 nano-meter = 0.000000001 meters
+        "mile" : 1609.34,               # 1 mile = 1609.34 meters
+        "nautical_mile" : 1852,         # 1 natical-mile = 1852 meters
+        "yard": 0.9144,                 # 1 yard = 0.9144 meters
+        "foot" : 0.3048,                # 1 foot = 0.3048 meters
+        "inch" : 0.0254                 # 1 inch = 0.0254 meters
     }
 
     from_metric = from_metric.lower().strip()
@@ -102,11 +105,15 @@ def time_converter(from_value, from_metric, target_metric):
     """convert time between seconds, minutes, hours, days, and weeks"""
 
     conversion_factor = {
-        "s" : 1,                    #with respect to sconds
-        "min" : 60,                 #with respect to sconds
-        "h" : 3600,                 #with respect to sconds
-        "day" : 86400,              #with respect to sconds
-        "week" : 604800             #with respect to sconds
+        "s": 1,                       # 1 second
+        "min": 60,                    # 1 minute = 60 seconds
+        "h": 3600,                    # 1 hour = 3600 seconds
+        "day": 86400,                 # 1 day = 86400 seconds
+        "week": 604800,               # 1 week = 7 days
+        "month": 2592000,             # 1 month = 30 days
+        "year": 31536000,             # 1 year = 365 days
+        "decade": 315360000,          # 1 decade = 10 years
+        "century": 3153600000         # 1 century = 100 years
     }
 
     from_metric = from_metric.lower().strip()
@@ -129,10 +136,11 @@ def volume_converter(from_value, from_metric, target_metric):
     """convert volume between liters. milliters, cubic meters, and gallons"""
 
     conversion_factor = {
-        "l" : 1,
-        "ml" : 0.001,
-        "m3" : 1000,
-        "gal" : 3.785411784
+        "l": 1,                     # 1 liter 
+        "ml": 0.001,                # 1 milliliter = 0.001 liters
+        "m3": 1000,                 # 1 cubic meter = 1000 liters
+        "gal": 3.785411784,         # 1 US gallon = 3.785412 liters
+        "oz": 0.0295735295625       # 1 US fluid ounce = 0.02957353 liters
     }
 
     from_metric = from_metric.lower().strip()
@@ -151,6 +159,38 @@ def volume_converter(from_value, from_metric, target_metric):
 
     return converted_value
 
+def digital_storage_coverter(from_value, from_metric, target_metric):
+    """Convert digital storage units using bytes as the base unit."""
+
+    conversion_factor = {
+        "bit": 0.125,           # 1 bit = 0.125 bytes
+        "byte": 1,              # 1 byte = 1 byte
+        "kb": 1000,             # 1 kilobyte = 1000 bytes
+        "mb": 1000 ** 2,        # 1 megabyte = 1000000 bytes
+        "gb": 1000 ** 3,        # 1 gigabyte = 1000000000 bytes
+        "tb": 1000 ** 4,        # 1 terabyte = 1000000000000 bytes
+        "pb": 1000 ** 5,        # 1 petabyte = 1000000000000000 bytes
+        "eb": 1000 ** 6         # 1 exabyte = 1000000000000000000 bytes
+    }
+
+    from_metric = from_metric.lower().strip()
+    target_metric = target_metric.lower().strip()
+    from_value = float(from_value)
+
+    if from_metric not in conversion_factor:
+        raise ValueError(f"Unsupported source unit: {from_metric}")
+    if target_metric not in conversion_factor:
+        raise ValueError(f"Unsupported target unit: {target_metric}")
+
+    if from_value < 0:
+        raise ValueError("Digital storage cannot be negative.")
+
+    #convert source units in bytes and then into target units
+    value_in_bytes = from_value * conversion_factor[from_metric]
+    converted_value = value_in_bytes / conversion_factor[target_metric]
+
+    return converted_value
+
 
 #MAIN PROGRAM - Collects the inputs, validates the converter slection, call the appropriate convert function and display result
 
@@ -162,7 +202,7 @@ def get_conversion_inputs(converter_name, units):
     for units, description in units.items():
         print(f" {units:<6} - {description}")
 
-    from_metric = input("\nCOnvert from units: ").lower().strip()
+    from_metric = input("\nConvert from units: ").lower().strip()
     from_value = float(input("Enter value: "))
     target_metric = input("Convert to units: ").lower().strip()
 
@@ -175,7 +215,9 @@ def run_length_converter():
         "m" : "meter",
         "cm" : "Centimeter",
         "mm" : "Millimeter",
+        "nanometer" : "Nanometer",
         "mile" : "Mile",
+        "nautical_mile" : "Nautical mile",
         "yard" : "Yard",
         "foot" : "Foot",
         "inch" :"Inch"
@@ -213,11 +255,15 @@ def run_speed_converter():
 #display units in time converter
 def run_time_converter():
     units = {
-        "s" : "Seconds",
-        "min" : "Minutes",
-        "h" : "Hours",
-        "day" : "Days",
-        "week" : "Weeks"
+        "s": "Seconds",
+        "min": "Minutes",
+        "h": "Hours",
+        "day": "Days",
+        "week": "Weeks",
+        "month": "Months (30 days)",
+        "year": "Years (365 days)",
+        "decade": "Decades (10 years)",
+        "century": "Centuries (100 years)"
     }
 
     value, source, target = get_conversion_inputs("time", units)
@@ -227,14 +273,31 @@ def run_time_converter():
 #display units in volume converter
 def run_volume_converter():
     units = {
-        "l" : "Liters",
-        "ml" : "Milli liters",
-        "m3" : "Cubic meters",
-        "gal" : "US gallon"
+        "l": "Liters",
+        "ml": "Milliliters",
+        "m3": "Cubic meters",
+        "gal": "US gallons",
+        "oz": "US fluid ounces"
     }
 
     value, source, target = get_conversion_inputs("volume", units)
     result = volume_converter(value, source, target)
+    return result, target
+
+def run_digital_storage_converter():
+    units = {
+        "bit" : "Bit",
+        "byte" : "Byte",
+        "kb" : "Kilobyte",
+        "mb" : "Megabyte",
+        "gb" : "Gigabyte",
+        "tb" : "Terabyte",
+        "pb" : "Petabyte",
+        "eb" : "Exabyte",
+    }
+
+    value, source, target = get_conversion_inputs("digital storage", units)
+    result = digital_storage_coverter(value, source, target)
     return result, target
 
 print("=" * 10)
@@ -242,7 +305,7 @@ print("Unit Converter")
 print("=" * 10)
 
 #list of converters available
-list_of_converters = ["length", "temperature", "speed", "time", "volume"]
+list_of_converters = ["length", "temperature", "speed", "time", "volume", "digital storage"]
 
 #----------- select converter -----------#
 print("\nAvailable converters: ")
@@ -257,7 +320,8 @@ converter_function = {
     "temperature" : run_temperature_converter,
     "speed" : run_speed_converter,
     "time" : run_time_converter,
-    "volume" : run_volume_converter
+    "volume" : run_volume_converter,
+    "digital storage" : run_digital_storage_converter
 }
 
 if select_converter not in list_of_converters:
